@@ -61,8 +61,8 @@
 import { ref } from 'vue'
 
 const stage = ref(null)
-const cols = ref(2)
-const rows = ref(2)
+const cols = ref(1)
+const rows = ref(1)
 
 const bars = [40, 55, 35, 70, 60, 85, 75, 90, 65, 80, 95, 72]
 
