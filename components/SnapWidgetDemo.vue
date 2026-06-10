@@ -1,6 +1,6 @@
 <template>
   <div class="demo-root">
-    <div class="hint">↘ drag the corner — snaps to grid</div>
+    <div class="hint">↘ 角をドラッグ — グリッドにスナップ</div>
 
     <div class="grid-stage" ref="stage">
       <!-- background grid as absolute overlay -->
@@ -19,23 +19,23 @@
         <div class="widget-inner">
           <!-- core: always visible -->
           <div class="core">
-            <div class="label">Revenue</div>
-            <div class="value">$48.2k</div>
+            <div class="label">売上</div>
+            <div class="value">¥6.82M</div>
             <div class="delta">↑ 12.4%</div>
           </div>
 
           <!-- right panel: revealed with extra horizontal space -->
           <div class="right-panel">
-            <div class="panel-title">By region</div>
-            <div class="region"><span>🇯🇵 JP</span><span>52%</span></div>
-            <div class="region"><span>🇺🇸 US</span><span>28%</span></div>
-            <div class="region"><span>🇩🇪 DE</span><span>11%</span></div>
-            <div class="region"><span>🌍 Other</span><span>9%</span></div>
+            <div class="panel-title">地域別</div>
+            <div class="region"><span>🇯🇵 日本</span><span>52%</span></div>
+            <div class="region"><span>🇺🇸 米国</span><span>28%</span></div>
+            <div class="region"><span>🇩🇪 ドイツ</span><span>11%</span></div>
+            <div class="region"><span>🌍 その他</span><span>9%</span></div>
           </div>
 
           <!-- bottom panel: revealed with extra vertical space -->
           <div class="bottom-panel">
-            <div class="panel-title">Last 12 months</div>
+            <div class="panel-title">過去 12 ヶ月</div>
             <div class="spark">
               <div class="bar" v-for="(h, i) in bars" :key="i" :style="{ height: h + '%' }" />
             </div>
@@ -57,7 +57,6 @@
     <div class="size-label">{{ cols }} × {{ rows }}</div>
   </div>
 </template>
-
 <script setup>
 import { ref } from 'vue'
 

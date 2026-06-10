@@ -2,7 +2,7 @@
   <div class="demo-wrap">
     <div class="container-box" :style="{ containerType: type }">
       <div class="card">
-        <div class="card-title">Browser Usage 2025</div>
+        <div class="card-title">ブラウザ使用率 2025</div>
         <div class="card-body">
           <div class="stat" v-for="b in browsers" :key="b.name">
             <span class="icon"><component :is="b.icon" /></span>

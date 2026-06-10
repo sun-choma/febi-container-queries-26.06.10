@@ -1,11 +1,11 @@
 <template>
   <div class="demo-root">
-    <div class="hint">← drag to resize →</div>
+    <div class="hint">← ドラッグでリサイズ →</div>
     <div class="resizable">
       <div class="widget">
-        <div class="widget-label">Monthly Revenue</div>
-        <div class="widget-value">$48,200</div>
-        <div class="widget-sub">↑ 12.4% from last month</div>
+        <div class="widget-label">月間売上</div>
+        <div class="widget-value">¥6,820,000</div>
+        <div class="widget-sub">↑ 先月比 12.4%</div>
         <div class="widget-bar">
           <div class="bar-fill" v-for="(h, i) in bars" :key="i" :style="{ height: h + '%' }" />
         </div>

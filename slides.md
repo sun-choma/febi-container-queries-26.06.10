@@ -6,15 +6,15 @@ transition: slide-left
 
 # 📦 Container Queries
 
-Stop asking the viewport what only the container knows
+ビューポートに聞いていたこと、本当はコンテナしか知らない
 
 ---
 layout: default
 ---
 
-# Before we dive in...
+# 本題に入る前に...
 
-Here's a nav item living in different contexts. How would you style it to adapt?
+同じナビアイテムを、異なるコンテキストに置いたとき。どうやって対応させますか？
 
 <NavDemo />
 
@@ -23,33 +23,35 @@ Here's a nav item living in different contexts. How would you style it to adapt?
 layout: default
 ---
 
-# The obvious solution?
+# まず思いつく方法は？
 
 ```css
 /* mobile */
 @media (max-width: 768px) {
-  .nav-item { /* bottom nav styles */
+  .nav-item {
+    /* ... */
   }
 }
 
 /* desktop */
-@media (min-width: 769px) {
-  .nav-item { /* sidebar styles */
+@media (min-width: 768px) {
+  .nav-item {
+    /* ... */
   }
 }
 ```
 
 <v-clicks>
 
-- ❌ Doesn't solve sidebar resize
-- ❌ More contexts = more declarations
-- ❌ Component depends on page structure
+- ❌ サイドバーのリサイズには対応できない
+- ❌ コンテキストが増えるほど宣言も増える
+- ❌ コンポーネントがページ構造に依存する
 
 </v-clicks>
 
 <v-click>
 
-Any alternatives?
+他に方法は？
 
 </v-click>
 
@@ -58,11 +60,11 @@ Any alternatives?
 layout: default
 ---
 
-# What about JavaScript?
+# JavaScript ならどうか？
 
 <div class="flex items-center gap-2">
-  <span>ResizeObserver to the resque</span>
-  <a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver" target="_blank">
+  <span>ResizeObserver の出番</span>
+  <a href="https://developer.mozilla.org/ja/docs/Web/API/ResizeObserver" target="_blank">
     <simple-icons-mdnwebdocs class="size-4 m-1" />
   </a>
 </div>
@@ -88,9 +90,9 @@ return
 
 <v-clicks>
 
-- ✅ Actually solves the resize problem
-- ❌ Init and cleanup on every component instance
-- ❌ Styling logic split across JS and CSS
+- ✅ リサイズ問題はちゃんと解決できる
+- ❌ コンポーネントごとに初期化とクリーンアップが必要
+- ❌ スタイルのロジックが JS と CSS に分散する
 
 </v-clicks>
 
@@ -98,19 +100,20 @@ return
 layout: default
 ---
 
-# What if CSS could do this natively?
+# これ、CSS だけでできたら？
 
-> We can query the screen size to adjust layout — why not the element itself?
+> 画面サイズはクエリできるのに、なぜ要素自身のサイズはできない？
 
 <v-click>
 
-We already can. Meet `@container`!
+実はもうできます。`@container` の登場です！
 
-A component can query its own container's size and adapt — no JS, no context selectors.
+コンポーネントは自分のコンテナのサイズをクエリして適応できる — JS も、コンテキストセレクタも不要。
 
 ```css
 @container (min-width: 300px) {
-  .nav-item { /* adapt */
+  .nav-item { 
+    /* adapt */
   }
 }
 ```
@@ -121,7 +124,7 @@ A component can query its own container's size and adapt — no JS, no context s
 
 <div class="flex items-center gap-2 my-4">
   <logos-chrome /> <logos-firefox /> <logos-safari /> <logos-microsoft-edge />
-  <span class="text-sm opacity-50">Baseline 2023 — 92% global support</span>
+  <span class="text-sm opacity-50">Baseline 2023 — グローバルサポート 92%</span>
 </div>
 
 </v-click>
@@ -129,8 +132,8 @@ A component can query its own container's size and adapt — no JS, no context s
 <v-click>
 
 <div class="flex items-center gap-2">
-  <span>MDN Reference</span>
-  <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries" target="_blank">
+  <span>MDN リファレンス</span>
+  <a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_containment/Container_queries" target="_blank">
     <simple-icons-mdnwebdocs class="size-4 m-1" />
   </a>
 </div>
@@ -141,24 +144,24 @@ A component can query its own container's size and adapt — no JS, no context s
 layout: default
 ---
 
-# How it works
+# 仕組み
 
-A **container** is any element you designate as a reference point.
-Its **children** can then query its size and adapt.
+**コンテナ**とは、基準点として指定した任意の要素のこと。
+その**子要素**がコンテナのサイズをクエリして適応できます。
 
 ```css
-.sidebar {
+.parent {
   container-type: inline-size;
 }
 
 @container (min-width: 300px) {
   .nav-item {
-    /* Adaptive styles here  */
+    /* ...  */
   }
 }
 ```
 
-> The component doesn't know where it lives — only how much space it has.
+> コンポーネントは自分がどこにいるかを知らない — 使えるスペースの広さだけを知っている。
 
 <div>
 <img src="/public/container.png" width="480" class="mx-auto"/>
@@ -174,14 +177,14 @@ layout: two-cols-header
 ::left::
 
 ```css
-.sidebar {
+.panel {
   container-type: inline-size;
 }
 ```
 
-- Queries width only
-- Doesn't affect element behaviour
-- Use this 99% of the time
+- 幅だけをクエリする
+- 要素の挙動には影響しない
+- 99% はこれを使う
 
 <div class="mt-8">
 <ContainerTypeDemo />
@@ -195,9 +198,9 @@ layout: two-cols-header
 }
 ```
 
-- Queries both width and height
-- Height collapses without explicit value
-- Only when height queries actually matter
+- 幅と高さの両方をクエリする
+- 明示的な値がないと高さが潰れる
+- 高さのクエリが本当に必要なときだけ
 
 <div class="mt-8">
 <ContainerTypeDemo type="size" />
@@ -212,7 +215,7 @@ layout: two-cols-header
 layout: two-cols-header
 ---
 
-# Nesting containers
+# コンテナのネスト
 
 ::left::
 
@@ -230,7 +233,7 @@ layout: two-cols-header
 
 .nav-item {
   @container (min-width: 200px) {
-    /* nearest container = .sidebar */
+    /* 最も近いコンテナ = .sidebar */
     display: flex;
   }
 }
@@ -277,7 +280,7 @@ layout: two-cols-header
 
 # `container-name`
 
-Escape hatch for when nearest isn't the right container.
+最も近いコンテナが目的のものでないときの逃げ道。
 
 ::left::
 
@@ -302,7 +305,7 @@ Escape hatch for when nearest isn't the right container.
 
 ::right::
 
-Then reference by name to skip the nearest container:
+名前で参照すれば、最も近いコンテナをスキップできる：
 
 ```css
 .card {
@@ -312,14 +315,14 @@ Then reference by name to skip the nearest container:
 }
 ```
 
-Both properties can be combined into a single shorthand:
+両方のプロパティは一つのショートハンドにまとめられる：
 
 ```css
 .layout  { container: layout / inline-size; }
 .sidebar { container: sidebar / inline-size; }
 ```
 
-> In practice, skipping the nearest container is rare. Naming is more useful as a readability convention.
+> 実際には、最も近いコンテナをスキップするケースは稀。命名は可読性の規約として役立つことの方が多い。
 
 <style>
 .slidev-layout { column-gap: 3rem; }
@@ -329,24 +332,24 @@ Both properties can be combined into a single shorthand:
 layout: default
 ---
 
-# Container Query Units
+# コンテナクエリの単位
 
-| Unit | Resolves to |
+| 単位 | 対応するもの |
 |---|---|
-| <v-mark type="circle" color="#bd93f9">`cqi`</v-mark> | inline size (width in LTR) |
-| `cqb` | block size (height) |
-| `cqw` | physical width |
-| `cqh` | physical height |
-| `cqmin` | smaller of `cqi` / `cqb` |
-| `cqmax` | larger of `cqi` / `cqb` |
+| <v-mark type="circle" color="#bd93f9">`cqi`</v-mark> | インラインサイズ（LTR では幅） |
+| `cqb` | ブロックサイズ（高さ） |
+| `cqw` | 物理的な幅 |
+| `cqh` | 物理的な高さ |
+| `cqmin` | `cqi` / `cqb` の小さい方 |
+| `cqmax` | `cqi` / `cqb` の大きい方 |
 
-> Same idea as `vw`/`vh` — but scoped to the container, not the viewport.
+> `vw`/`vh` と同じ発想 — ただしビューポートではなく、コンテナを基準にする。
 
 ---
 layout: default
 ---
 
-# `cqi` in action
+# `cqi` の実例
 
 
 ```css
@@ -357,7 +360,7 @@ layout: default
 .widget-sub { font-size: clamp(0.55rem, 2cqi, 0.8rem); }
 ```
 
-No breakpoints. Font scales smoothly with container width.
+ブレークポイントなし。フォントがコンテナ幅に合わせてなめらかにスケールする。
 
 
 <CqiDemo />
@@ -370,9 +373,9 @@ No breakpoints. Font scales smoothly with container width.
 layout: default
 ---
 
-# Tailwind v4 has it covered
+# Tailwind v4 も対応済み
 
-Not a CSS-only feature — if you're on Tailwind v4, it's built in. No plugins needed.
+CSS だけの機能ではありません — Tailwind v4 なら標準搭載。プラグイン不要です。
 
 ```html
 <div class="@container">
@@ -384,12 +387,12 @@ Not a CSS-only feature — if you're on Tailwind v4, it's built in. No plugins n
 
 <v-click>
 
-`@md` and `@lg` use the same thresholds as `md` and `lg` — `768px` and `1024px` — but measured against the container width, not the viewport.
+`@md` と `@lg` は `md` / `lg` と同じしきい値（`768px` と `1024px`）を使う — ただしビューポートではなく、コンテナ幅を基準に測る。
 
-| Class | Reference | Threshold |
+| クラス | 基準 | しきい値 |
 |---|---|---|
-| `md:` | viewport | ≥ 768px |
-| `@md:` | container | ≥ 768px |
+| `md:` | ビューポート | ≥ 768px |
+| `@md:` | コンテナ | ≥ 768px |
 
 </v-click>
 
@@ -397,7 +400,7 @@ Not a CSS-only feature — if you're on Tailwind v4, it's built in. No plugins n
 layout: two-cols-header
 ---
 
-# `size` in practice
+# `size` の実践
 
 ::left::
 
@@ -405,13 +408,13 @@ layout: two-cols-header
 
 ::right::
 
-When **both axes** matter, `container-type: size` lets the component respond to width *and* height.
+**両方の軸**が重要なとき、`container-type: size` を使えばコンポーネントが幅*と*高さの両方に応答できる。
 
-- Extra width → reveals regional breakdown on the right
-- Extra height → reveals the 12-month trend below
-- `cqmin` / `cqb` scale the contents to fit
+- 幅が増える → 右側に地域別の内訳が現れる
+- 高さが増える → 下に過去 12 ヶ月の推移が現れる
+- `cqmin` / `cqb` が中身をスペースに合わせてスケールする
 
-Drag the corner and watch content appear where there's room for it.
+角をドラッグして、スペースのある場所にコンテンツが現れる様子を見てください。
 
 <style>
 .slidev-layout { column-gap: 3rem; }
@@ -421,20 +424,20 @@ Drag the corner and watch content appear where there's room for it.
 layout: default
 ---
 
-# Takeaways
+# まとめ
 
-- **`@media` owns the page. `@container` owns the component.**
-- Declarations scale with containers, not contexts — drop a component anywhere, it just works
-- `inline-size` covers 99% of cases — set it and forget it
-- `size` earns its place when both axes matter (resizable dashboard widgets)
-- `cqi` for fluid sizing — smooth scaling, no breakpoints
-- ~92% browser support, Baseline 2023 — no polyfill needed
+- **`@media` はページを持つ。`@container` はコンポーネントを持つ。**
+- 宣言はコンテキストではなくコンテナに比例する — コンポーネントをどこに置いても、ちゃんと動く
+- `inline-size` で 99% のケースをカバー — 設定したら忘れていい
+- `size` の出番は両方の軸が重要なとき（リサイズ可能なダッシュボードウィジェット）
+- `cqi` で流動的なサイズ調整 — なめらかにスケール、ブレークポイント不要
+- ブラウザサポート約 92%、Baseline 2023 — ポリフィル不要
 
 ---
 layout: two-cols-header
 ---
 
-# A glimpse into the future
+# 未来への一歩
 
 <div class="flex items-center gap-2">
   <span>Container scroll-state queries — MDN</span>
@@ -445,24 +448,23 @@ layout: two-cols-header
 
 ::left::
 
-### Scroll-state queries
 
-Detect stuck, snapped, and scrollable states — in pure CSS.
+stuck・snapped・scrollable の状態を — 純粋な CSS だけで検出する。
 
 ```css
 .scroller {
   container-type: scroll-state;
 }
 
-/* fires while more content lies below */
+/* まだ下にコンテンツがある間だけ発火 */
 @container scroll-state(scrollable: bottom) {
   .more-cue { opacity: 1; }
 }
 ```
 
-Replaces JS scroll listeners entirely — no events, no `requestAnimationFrame`, no jank.
+JS のスクロールリスナーを丸ごと置き換える — イベントも `requestAnimationFrame` も、カクつきもなし。
 
-Chrome only for now → wrap in `@supports`, treat as progressive enhancement.
+今だと Chromium 系のみ → `@supports` で囲み、プログレッシブエンハンスメントとして扱う。
 
 ::right::
 
@@ -476,13 +478,13 @@ Chrome only for now → wrap in `@supports`, treat as progressive enhancement.
 layout: center
 ---
 
-# Try it in your next component 📦
+# 次のコンポーネントで試してみてください 📦
 
 <div class="resources">
   <a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_containment/Container_queries" target="_blank" class="resource">
     <lucide-link class="inline" /> MDN — Container queries
   </a>
-  <a href="https://web.dev/learn/css/container-queries?hl=en" target="_blank" class="resource">
+  <a href="https://web.dev/learn/css/container-queries?hl=ja" target="_blank" class="resource">
     <lucide-link class="inline" /> web.dev — Container Queries
   </a>
   <a href="https://caniuse.com/css-container-queries" target="_blank" class="resource">

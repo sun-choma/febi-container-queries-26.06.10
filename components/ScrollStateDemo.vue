@@ -5,7 +5,7 @@
       <div class="header-wrap">
         <div class="header">
           <span class="dot" />
-          <span class="title">Dashboard</span>
+          <span class="title">ダッシュボード</span>
           <span class="stuck-tag">stuck!</span>
         </div>
       </div>
@@ -17,20 +17,20 @@
       </div>
 
       <!-- fades out once scrolled to bottom -->
-      <div class="more-cue">more below ↓</div>
+      <div class="more-cue">続きはこちら ↓</div>
     </div>
-    <div class="hint">↕ scroll inside the box</div>
+    <div class="hint">↕ ボックス内をスクロール</div>
   </div>
 </template>
 
 <script setup>
 const rows = [
-  'Revenue grew 12.4% this quarter',
-  'Active users: 8,230',
-  'Avg. session: 3m 42s',
-  'Top region: Japan (52%)',
-  'Mobile traffic: 68%',
-  'Bounce rate down to 42%',
+  '今四半期の売上は 12.4% 増加',
+  'アクティブユーザー数: 8,230',
+  '平均セッション時間: 3分42秒',
+  '最多地域: 日本 (52%)',
+  'モバイル流入: 68%',
+  '直帰率は 42% に低下',
 ]
 </script>
 
@@ -75,6 +75,7 @@ const rows = [
   background: #1e1f29;
   font-family: 'Fira Code', monospace;
   transition: background 0.25s, box-shadow 0.25s;
+
 }
 
 .dot { width: 10px; height: 10px; border-radius: 50%; background: #50fa7b; }
@@ -99,6 +100,7 @@ const rows = [
   color: #f8f8f2;
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin: 0;
 }
 
 /* sticky cue pinned to the bottom of the scroll viewport */
